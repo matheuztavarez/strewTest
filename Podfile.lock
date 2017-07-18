@@ -1,20 +1,26 @@
 PODS:
+  - DateTimePicker (1.1.2)
   - Realm (2.8.3):
     - Realm/Headers (= 2.8.3)
   - Realm/Headers (2.8.3)
   - RealmSwift (2.8.3):
     - Realm (= 2.8.3)
-  - SwiftDate (4.1.6)
+  - SkyFloatingLabelTextField (3.2.0)
+  - SwiftDate (4.1.7)
 
 DEPENDENCIES:
+  - DateTimePicker
   - RealmSwift
+  - SkyFloatingLabelTextField (~> 3.0)
   - SwiftDate
 
 SPEC CHECKSUMS:
+  DateTimePicker: 518bffa5438ef83a7a687cc4d5e187e5c12012b8
   Realm: 3601ef091c8c499a31101d8563b991e75546cdce
   RealmSwift: 8183818515471b01a99abdd2970f8e4fd52b6f4a
-  SwiftDate: 6bae71add23ce9f16ec2be3a521b21000da5804b
+  SkyFloatingLabelTextField: 4e2d2f7160af660ed1da6bb9d0027b5c474b4b79
+  SwiftDate: 029be76691ee89176da3a46c7df3415b6734bc5b
 
-PODFILE CHECKSUM: eed3d8fa17740b87db6b071e5ff7b55919e9a564
+PODFILE CHECKSUM: 706b677819335bc6cd7760c934bc8d235afc1854
 
 COCOAPODS: 1.2.1

@@ -8,12 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		2F21DD301F1E59F40056448D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F21DD2F1F1E59F40056448D /* AppDelegate.swift */; };
-		2F21DD321F1E59F40056448D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F21DD311F1E59F40056448D /* ViewController.swift */; };
+		2F21DD321F1E59F40056448D /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F21DD311F1E59F40056448D /* ListViewController.swift */; };
 		2F21DD351F1E59F40056448D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F21DD331F1E59F40056448D /* Main.storyboard */; };
 		2F21DD371F1E59F40056448D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F21DD361F1E59F40056448D /* Assets.xcassets */; };
 		2F21DD3A1F1E59F40056448D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F21DD381F1E59F40056448D /* LaunchScreen.storyboard */; };
 		2F21DD451F1E59F40056448D /* strewTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F21DD441F1E59F40056448D /* strewTestTests.swift */; };
 		2F21DD501F1E59F40056448D /* strewTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F21DD4F1F1E59F40056448D /* strewTestUITests.swift */; };
+		2F47885A1F1E6FD0009BA6D6 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4788591F1E6FD0009BA6D6 /* DetailsViewController.swift */; };
+		2F47885D1F1E6FEB009BA6D6 /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F47885C1F1E6FEB009BA6D6 /* TaskModel.swift */; };
+		2F47885F1F1E746D009BA6D6 /* TaskCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F47885E1F1E746D009BA6D6 /* TaskCellModel.swift */; };
+		2F4788611F1E79C4009BA6D6 /* PublicVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4788601F1E79C4009BA6D6 /* PublicVars.swift */; };
 		84899C180246F3D67C415179 /* Pods_strewTestUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3394CA46703338A4707078D6 /* Pods_strewTestUITests.framework */; };
 		CFEE29493BAB39D0D38AFFC9 /* Pods_strewTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AB271F8F9ADA806C2C20325 /* Pods_strewTest.framework */; };
 		D515F9096984B14522850131 /* Pods_strewTestTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BECFB5DDE928F79624790711 /* Pods_strewTestTests.framework */; };
@@ -39,7 +43,7 @@
 /* Begin PBXFileReference section */
 		2F21DD2C1F1E59F40056448D /* strewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = strewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F21DD2F1F1E59F40056448D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2F21DD311F1E59F40056448D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		2F21DD311F1E59F40056448D /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		2F21DD341F1E59F40056448D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2F21DD361F1E59F40056448D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F21DD391F1E59F40056448D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -50,6 +54,10 @@
 		2F21DD4B1F1E59F40056448D /* strewTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = strewTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F21DD4F1F1E59F40056448D /* strewTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = strewTestUITests.swift; sourceTree = "<group>"; };
 		2F21DD511F1E59F40056448D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2F4788591F1E6FD0009BA6D6 /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		2F47885C1F1E6FEB009BA6D6 /* TaskModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
+		2F47885E1F1E746D009BA6D6 /* TaskCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCellModel.swift; sourceTree = "<group>"; };
+		2F4788601F1E79C4009BA6D6 /* PublicVars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicVars.swift; sourceTree = "<group>"; };
 		3394CA46703338A4707078D6 /* Pods_strewTestUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_strewTestUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		372134FF1ABA4094A8F18FB9 /* Pods-strewTestTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-strewTestTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-strewTestTests/Pods-strewTestTests.release.xcconfig"; sourceTree = "<group>"; };
 		6AB271F8F9ADA806C2C20325 /* Pods_strewTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_strewTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,8 +122,10 @@
 		2F21DD2E1F1E59F40056448D /* strewTest */ = {
 			isa = PBXGroup;
 			children = (
+				2F47885B1F1E6FDE009BA6D6 /* Models */,
+				2F4788581F1E6FAF009BA6D6 /* ListView */,
+				2F4788571F1E6FA3009BA6D6 /* DetailsView */,
 				2F21DD2F1F1E59F40056448D /* AppDelegate.swift */,
-				2F21DD311F1E59F40056448D /* ViewController.swift */,
 				2F21DD331F1E59F40056448D /* Main.storyboard */,
 				2F21DD361F1E59F40056448D /* Assets.xcassets */,
 				2F21DD381F1E59F40056448D /* LaunchScreen.storyboard */,
@@ -140,6 +150,32 @@
 				2F21DD511F1E59F40056448D /* Info.plist */,
 			);
 			path = strewTestUITests;
+			sourceTree = "<group>";
+		};
+		2F4788571F1E6FA3009BA6D6 /* DetailsView */ = {
+			isa = PBXGroup;
+			children = (
+				2F4788591F1E6FD0009BA6D6 /* DetailsViewController.swift */,
+			);
+			name = DetailsView;
+			sourceTree = "<group>";
+		};
+		2F4788581F1E6FAF009BA6D6 /* ListView */ = {
+			isa = PBXGroup;
+			children = (
+				2F21DD311F1E59F40056448D /* ListViewController.swift */,
+				2F47885E1F1E746D009BA6D6 /* TaskCellModel.swift */,
+			);
+			name = ListView;
+			sourceTree = "<group>";
+		};
+		2F47885B1F1E6FDE009BA6D6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2F47885C1F1E6FEB009BA6D6 /* TaskModel.swift */,
+				2F4788601F1E79C4009BA6D6 /* PublicVars.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		82964EEA78533B234CBC8248 /* Frameworks */ = {
@@ -449,8 +485,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F21DD321F1E59F40056448D /* ViewController.swift in Sources */,
+				2F4788611F1E79C4009BA6D6 /* PublicVars.swift in Sources */,
+				2F21DD321F1E59F40056448D /* ListViewController.swift in Sources */,
 				2F21DD301F1E59F40056448D /* AppDelegate.swift in Sources */,
+				2F47885D1F1E6FEB009BA6D6 /* TaskModel.swift in Sources */,
+				2F47885A1F1E6FD0009BA6D6 /* DetailsViewController.swift in Sources */,
+				2F47885F1F1E746D009BA6D6 /* TaskCellModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -709,6 +749,7 @@
 				2F21DD561F1E59F40056448D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2F21DD571F1E59F40056448D /* Build configuration list for PBXNativeTarget "strewTestTests" */ = {
 			isa = XCConfigurationList;
@@ -717,6 +758,7 @@
 				2F21DD591F1E59F40056448D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2F21DD5A1F1E59F40056448D /* Build configuration list for PBXNativeTarget "strewTestUITests" */ = {
 			isa = XCConfigurationList;
@@ -725,6 +767,7 @@
 				2F21DD5C1F1E59F40056448D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

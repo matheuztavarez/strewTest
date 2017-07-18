@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>DateTimePicker.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-strewTest.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -29,6 +34,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SkyFloatingLabelTextField.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SwiftDate.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -36,6 +46,47 @@
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
-	<dict/>
+	<dict>
+		<key>3960FDE012CAF72E72363C106F1F29CF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3ED4FC6E5A4F960303C8CCB035BBEEA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>961ACD8FB02E52997ADA4ADF5DE10D1D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>96A84ECDD6A967E464BA3E201EADF5AE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>990F7CC5D6B4F9C60AE0A72CB397DC4E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9FA73695D1E57996C128686ADB24DCC2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>ADA12001E3BFE86B152218AFC3DF76D4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C78CA2FDB537EC416FBC50A67BBB28C5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
 </dict>
 </plist>

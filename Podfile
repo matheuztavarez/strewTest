@@ -6,6 +6,9 @@ target 'strewTest' do
   use_frameworks!
   pod 'RealmSwift'
   pod 'SwiftDate'
+  pod 'SkyFloatingLabelTextField', '~> 3.0'
+  pod 'DateTimePicker'
+
   # Pods for strewTest
 
   target 'strewTestTests' do
