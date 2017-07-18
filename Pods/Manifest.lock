@@ -1,0 +1,20 @@
+PODS:
+  - Realm (2.8.3):
+    - Realm/Headers (= 2.8.3)
+  - Realm/Headers (2.8.3)
+  - RealmSwift (2.8.3):
+    - Realm (= 2.8.3)
+  - SwiftDate (4.1.6)
+
+DEPENDENCIES:
+  - RealmSwift
+  - SwiftDate
+
+SPEC CHECKSUMS:
+  Realm: 3601ef091c8c499a31101d8563b991e75546cdce
+  RealmSwift: 8183818515471b01a99abdd2970f8e4fd52b6f4a
+  SwiftDate: 6bae71add23ce9f16ec2be3a521b21000da5804b
+
+PODFILE CHECKSUM: eed3d8fa17740b87db6b071e5ff7b55919e9a564
+
+COCOAPODS: 1.2.1

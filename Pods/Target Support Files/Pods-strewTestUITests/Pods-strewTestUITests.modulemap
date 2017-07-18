@@ -1,0 +1,6 @@
+framework module Pods_strewTestUITests {
+  umbrella header "Pods-strewTestUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
