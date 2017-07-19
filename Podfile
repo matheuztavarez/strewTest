@@ -6,8 +6,7 @@ target 'strewTest' do
   use_frameworks!
   pod 'RealmSwift'
   pod 'SkyFloatingLabelTextField', '~> 3.0'
-  pod ‘Toaster’
-
+  pod 'Toaster'
   # Pods for strewTest
 
   target 'strewTestTests' do

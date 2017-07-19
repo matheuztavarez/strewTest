@@ -19,8 +19,6 @@ class DetailsViewController: UIViewController, UITextFieldDelegate {
     var isEditingTask = false
 
     var parentView = ListViewController()
-
-    var taskListCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,22 +61,27 @@ class DetailsViewController: UIViewController, UITextFieldDelegate {
 
 
         if(isEditingTask) {
+//            DispatchQueue.global().async {
+            
             try! realm.write {
                 self.task.name = name
                 self.task.priority = priority
                 realm.create(Task.self,value:self.task,update:true)
 //                realm.add(self.task)
             }
-            parentView.message = "Task created!"
+//            }
+            parentView.message = "Task updated!"
         } else {
+//            DispatchQueue.global().async {
             try! realm.write {
                 self.task.name = name
                 self.task.priority = priority
-                self.task.id += taskListCount
+                
+                realm.create(Task.self,value:self.task)
+//            }
             }
-            parentView.message = "Task updated!"
+            parentView.message = "Task created!"
         }
-
 
         self.performSegueToReturnBack()
     }

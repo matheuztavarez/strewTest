@@ -35,20 +35,17 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uWo-AZ-GMu">
                                                     <rect key="frame" x="8" y="8" width="359" height="19.5"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="20" id="DkH-Qb-EiA"/>
-                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Priority" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g8R-Ls-Cae">
-                                                    <rect key="frame" x="8" y="33" width="359" height="16"/>
+                                                    <rect key="frame" x="9.5" y="33" width="357.5" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="2Ph-fi-FgO"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -57,7 +54,7 @@
                                                 <constraint firstItem="g8R-Ls-Cae" firstAttribute="top" secondItem="uWo-AZ-GMu" secondAttribute="bottom" constant="6" id="J9y-kl-nI9"/>
                                                 <constraint firstItem="uWo-AZ-GMu" firstAttribute="trailing" secondItem="vAP-LA-zaR" secondAttribute="trailingMargin" id="MJl-6v-w1K"/>
                                                 <constraint firstItem="g8R-Ls-Cae" firstAttribute="trailing" secondItem="vAP-LA-zaR" secondAttribute="trailingMargin" id="aUt-Wa-NvH"/>
-                                                <constraint firstItem="g8R-Ls-Cae" firstAttribute="leading" secondItem="vAP-LA-zaR" secondAttribute="leadingMargin" id="kyh-Hv-VsS"/>
+                                                <constraint firstItem="g8R-Ls-Cae" firstAttribute="leading" secondItem="vAP-LA-zaR" secondAttribute="leadingMargin" constant="2" id="kyh-Hv-VsS"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="g8R-Ls-Cae" secondAttribute="bottom" constant="2.5" id="nGc-OE-hXq"/>
                                                 <constraint firstItem="uWo-AZ-GMu" firstAttribute="top" secondItem="vAP-LA-zaR" secondAttribute="topMargin" id="tOs-BQ-Z8q"/>
                                             </constraints>
