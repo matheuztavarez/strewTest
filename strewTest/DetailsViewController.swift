@@ -8,64 +8,86 @@
 
 import Foundation
 import UIKit
-import DateTimePicker
+import RealmSwift
 
 class DetailsViewController: UIViewController, UITextFieldDelegate {
-    
-    @IBOutlet weak var selectDateButton: UIButton!
+
     @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var prioritySelector: UISegmentedControl!
+
+    var task = Task()
+    var isEditingTask = false
+
+    var parentView = ListViewController()
+
+    var taskListCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        realm = try! Realm()
+        
         self.nameTextField.delegate = self
         self.hideKeyboardWhenTappedAround()
+
+        if(!isEditingTask) {
+            self.title = "New Task"
+        }else{
+            self.nameTextField.text = task.name
+            self.prioritySelector.selectedSegmentIndex = task.priority
+        }
         // Do any additional setup after loading the view, typically from a nib.
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    @IBAction func selectDateButton(_ sender: Any) {
-        selectDate()
+
+    @IBAction func saveButton(_ sender: Any) {
+
+        var name = ""
+
+        if(nameTextField.text! == "") {
+            name = "No name"
+        } else {
+            name = nameTextField.text!
+        }
+
+        saveTask(name: name, priority: prioritySelector.selectedSegmentIndex)
+
     }
-    
+
+    func saveTask(name: String, priority: Int) {
+
+
+
+        if(isEditingTask) {
+            try! realm.write {
+                self.task.name = name
+                self.task.priority = priority
+                realm.create(Task.self,value:self.task,update:true)
+//                realm.add(self.task)
+            }
+            parentView.message = "Task created!"
+        } else {
+            try! realm.write {
+                self.task.name = name
+                self.task.priority = priority
+                self.task.id += taskListCount
+            }
+            parentView.message = "Task updated!"
+        }
+
+
+        self.performSegueToReturnBack()
+    }
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
-    
-    func selectDate() {
-        
-        let picker = DateTimePicker.show()
-        picker.highlightColor = lightBlueColor
-    
-        picker.completionHandler = { date in
-            // do something after tapping done
-        }
-        
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        guard let text = textField.text else { return true }
-        let newLength = text.characters.count + string.characters.count - range.length
-        return newLength <= 140 // Bool
-    }
-    
-//    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-//        
-//        if(text == "\n") {
-//            
-//            nameTextField.resignFirstResponder()
-//            
-//            return false
-//        }
-//        
-//        return true
-//    }
-    
+
+
 }
 

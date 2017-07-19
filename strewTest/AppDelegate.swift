@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Toaster
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -45,14 +46,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension UIViewController {
+
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
-    
+
     func dismissKeyboard() {
         view.endEditing(true)
     }
+
+    func performSegueToReturnBack() {
+        if let nav = self.navigationController {
+            nav.popViewController(animated: true)
+        } else {
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+
+
+}
+public func showToast(_ show: String) {
+    Toast(text: show, duration: Delay.short).show()
 }
 

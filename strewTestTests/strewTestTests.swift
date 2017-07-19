@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import RealmSwift
 @testable import strewTest
 
 class strewTestTests: XCTestCase {
@@ -32,5 +33,18 @@ class strewTestTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+//    let testRealmURL = URL(fileURLWithPath: "...")
+    
+//    func testThatUserIsUpdatedFromServer() {
+//        let config = Realm.Configuration(fileURL: testRealmURL)
+//        let testRealm = try! Realm(configuration: config)
+//        let jsonData = "{\"email\": \"help@realm.io\"}".data(using: .utf8)!
+//        createOrUpdateUser(in: testRealm, with: jsonData)
+//        let expectedUser = User()
+//        expectedUser.email = "help@realm.io"
+//        XCTAssertEqual(testRealm.objects(User.self).first!, expectedUser,
+//                       "User was not properly updated from server.")
+//    }
     
 }

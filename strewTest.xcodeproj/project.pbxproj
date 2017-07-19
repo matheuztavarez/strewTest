@@ -100,7 +100,7 @@
 		2F21DD231F1E59F40056448D = {
 			isa = PBXGroup;
 			children = (
-				2F21DD2E1F1E59F40056448D /* strewTest */,
+				2F21DD2E1F1E59F40056448D /* strew */,
 				2F21DD431F1E59F40056448D /* strewTestTests */,
 				2F21DD4E1F1E59F40056448D /* strewTestUITests */,
 				2F21DD2D1F1E59F40056448D /* Products */,
@@ -119,7 +119,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2F21DD2E1F1E59F40056448D /* strewTest */ = {
+		2F21DD2E1F1E59F40056448D /* strew */ = {
 			isa = PBXGroup;
 			children = (
 				2F47885B1F1E6FDE009BA6D6 /* Models */,
@@ -131,6 +131,7 @@
 				2F21DD381F1E59F40056448D /* LaunchScreen.storyboard */,
 				2F21DD3B1F1E59F40056448D /* Info.plist */,
 			);
+			name = strew;
 			path = strewTest;
 			sourceTree = "<group>";
 		};
