@@ -8,85 +8,71 @@
 import Foundation
 import UIKit
 import RealmSwift
+import SwipyCell
 
-class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating {
+class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate, SwipyCellDelegate,UISearchControllerDelegate {
 
     @IBOutlet weak var tableView: UITableView!
 
-    
-    var selectedRow = 0
-    var searchController : UISearchController!
+    var selectedTask = Task()
+
+    var searchController: UISearchController!
     var selectedScope = 0
     var notificationToken: NotificationToken?
 
     var message = ""
     var refreshControl: UIRefreshControl?
-    
+
     var setupView = true
+
+    let scopeTitleList = ["To Do", "Done", "All"]
+
+    private var items: Results<Task> {
+
+        return searchController.isActive ? searchedTasks[selectedScope] : taskList[selectedScope]
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.hideKeyboardWhenTappedAround()
 
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupRealm()
     }
 
     override func viewDidAppear(_ animated: Bool) {
-super.viewDidAppear(animated)
+        super.viewDidAppear(animated)
         if(self.message != "") {
             showToast(self.message)
             self.message = ""
         }
     }
 
-//    func backgroundAdd() {
-//        // Import many items in a background thread
-//        DispatchQueue.global().async {
-//            // Get new realm and table since we are in a new thread
-//            let realm = try! Realm()
-//            realm.beginWrite()
-//            for _ in 0..<5 {
-//                // Add row via dictionary. Order is ignored.
-//                realm.create(Task.self, value: ["title": randomTitle(), "date": NSDate(), "sectionTitle": randomSectionTitle()])
-//            }
-//            try! realm.commitWrite()
-//        }
-//    }
 
     func viewSetup() {
-        
-        refreshControl = UIRefreshControl()
-        
-        if #available(iOS 10.0, *) {
-            tableView.refreshControl = refreshControl
-        } else {
-            tableView.addSubview(refreshControl!)
-        }
-        
-        refreshControl?.addTarget(self, action: #selector(setupRealm), for: .valueChanged)
-        
+
         searchController = UISearchController(searchResultsController: nil)
-        
+
         self.definesPresentationContext = true
-        
+        searchController.delegate = self
+        searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = self
-        
+
         searchController.dimsBackgroundDuringPresentation = false
-        
+
         searchController.searchBar.sizeToFit()
         searchController.searchBar.showsScopeBar = true
         searchController.searchBar.placeholder = "Search Task"
+        searchController.searchBar.backgroundColor = .clear
 
         searchController.isActive = false
-        searchController.searchBar.scopeButtonTitles = ["To Do", "Done", "All"]
-        
+        searchController.searchBar.scopeButtonTitles = scopeTitleList
         self.tableView.tableHeaderView = searchController.searchBar
-               
+
 
         let footerView = UIView(frame: CGRect.zero)
         footerView.backgroundColor = .white
@@ -94,7 +80,9 @@ super.viewDidAppear(animated)
         self.tableView.tableFooterView = footerView
         self.tableView.backgroundColor = .white
 
-        
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 120.0
+
     }
 
 
@@ -103,66 +91,104 @@ super.viewDidAppear(animated)
         return result.addNotificationBlock { [unowned self] changes in
             switch changes {
             case .initial:
-                self.searchedTasks = self.taskList
+                searchedTasks.removeAll(keepingCapacity: false)
+                searchedTasks = taskList
                 self.tableView.reloadData()
                 break
-//                self.didUpdateList(reload: true)
             case .update(_, let deletions, let insertions, let modifications):
-
-                self.tableView.beginUpdates()
-                self.tableView.insertRows(at: insertions.map { IndexPath(row: $0, section: 0) }, with: .automatic)
-                self.tableView.deleteRows(at: deletions.map { IndexPath(row: $0, section: 0) }, with: .automatic)
-                self.tableView.reloadRows(at: modifications.map { IndexPath(row: $0, section: 0) }, with: .none)
-                self.tableView.endUpdates()
-
+                searchedTasks.removeAll(keepingCapacity: false)
+                searchedTasks = taskList
+//                self.tableView.beginUpdates()
+//                self.tableView.insertRows(at: insertions.map { IndexPath(row: $0, section: 0) }, with: .fade)
+//                self.tableView.deleteRows(at: deletions.map { IndexPath(row: $0, section: 0) }, with: .fade)
+//                self.tableView.reloadRows(at: modifications.map { IndexPath(row: $0, section: 0) }, with: .none)
+//                self.tableView.endUpdates()
+                self.tableView.reloadData()
                 break
-//                self.didUpdateList(reload: false)
             case .error(let error):
-                // An error occurred while opening the Realm file on the background worker thread
                 fatalError(String(describing: error))
             }
         }
     }
 
-//    func updateArrays(_ result: Results<Task>){
-//        for task in result {
-//            self.taskList.append(task)
-//        }
-//    }
-
     func setupRealm() {
         realm = try! Realm()
-
-
 
         taskList.append(realm.objects(Task.self).filter("completed == false"))
         taskList.append(realm.objects(Task.self).filter("completed == true"))
         taskList.append(realm.objects(Task.self))
-        
-searchedTasks.removeAll(keepingCapacity: false)
-        
+
+        searchedTasks.removeAll(keepingCapacity: false)
+
         searchedTasks = taskList
-        
+
         for i in 0...2 {
             self.notificationToken = self.setupNotifications(taskList[i])
         }
-        if(setupView){
-self.viewSetup()
+        if(setupView) {
+            self.viewSetup()
             self.setupView = false
         }
     }
 
+    //    MARK: Swipy Delegates
+
+    // When the user starts swiping the cell this method is called
+    func swipyCellDidStartSwiping(_ cell: SwipyCell) {
+
+    }
+
+    // When the user ends swiping the cell this method is called
+    func swipyCellDidFinishSwiping(_ cell: SwipyCell, atState state: SwipyCellState, triggerActivated activated: Bool) {
+        //        print("swipe finished - activated: \(activated), state: \(state)")
+    }
+
+    // When the user is dragging, this method is called with the percentage from the border
+    func swipyCell(_ cell: SwipyCell, didSwipeWithPercentage percentage: CGFloat, currentState state: SwipyCellState, triggerActivated activated: Bool) {
+
+    }
+
     //MARK: Search Delegate
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBar.showsScopeBar = true
+        searchBar.sizeToFit()
+        return true
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.showsScopeBar = true
+        searchBar.sizeToFit()//showsScopeBar = true
+    }
 
     func updateSearchResults(for searchController: UISearchController) {
+        
+        self.searchController.searchBar.showsScopeBar = true
+        self.searchController.searchBar.sizeToFit()
+        
+//        searchController.searchBar.showsScopeBar = false
 
-        searchedTasks.removeAll(keepingCapacity: false)
+//        searchedTasks[selectedScope].removeAll(keepingCapacity: false)
 
         if let searchText = searchController.searchBar.text, !searchText.isEmpty {
 
-            let predicate = NSPredicate(format: "name contains %@", searchText.lowercased())
+            var predicate = NSPredicate()
+
+            switch selectedScope {
+            case 0:
+                predicate = NSPredicate(format: "name contains %@ AND completed == false", searchText.lowercased())
+                break
+            case 1:
+                predicate = NSPredicate(format: "name contains %@ AND completed == true", searchText.lowercased())
+                break
+            case 2:
+                predicate = NSPredicate(format: "name contains %@", searchText.lowercased())
+                break
+            default:
+                break
+            }
+
             let array = realm.objects(Task.self).filter(predicate)
             searchedTasks[selectedScope] = array
+
         } else {
             searchedTasks = taskList
         }
@@ -177,11 +203,16 @@ self.viewSetup()
     }
 
     // MARK: - Table view data source
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
 //        let data = searchController.isActive ? searchedTasks : taskList
-        
-        if(searchedTasks[selectedScope].count == 0) {
+        let count = items.count
+        if(count == 0) {
 
             let noResultLabel = UILabel(frame: tableView.bounds)
             noResultLabel.textColor = UIColor(white: 60.0 / 255.0, alpha: 1)
@@ -201,8 +232,8 @@ self.viewSetup()
 
             tableView.backgroundView = nil
         }
-var data = searchedTasks[selectedScope]
-        var count = data.count
+
+
         return count
 
     }
@@ -211,145 +242,75 @@ var data = searchedTasks[selectedScope]
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as! TaskCell
 
-        let data = searchController.isActive ? searchedTasks : taskList
 
-        let task = searchedTasks[selectedScope][indexPath.row]
+        cell.accessoryType = .disclosureIndicator
+
+        let task = items[indexPath.row]
 
         cell.bind(task)
+
+        cell.delegate = self
+
+        cell.task = task
+
+        var swipeView = UIView()
+        var swipeColor = UIColor()
+        var message = ""
+
+        if !(cell.task.completed) {
+            swipeView = viewWithImageName("check")
+            swipeColor = greenColor//UIColor(red: 85.0 / 255.0, green: 213.0 / 255.0, blue: 80.0 / 255.0, alpha: 1.0)
+            message = "Congratulations! Task Completed!"
+        } else {
+            swipeView = viewWithImageName("clock")
+            swipeColor = .gray
+            message = "Maybe later!"
+        }
+
+
+
+        cell.addSwipeTrigger(forState: .state(0, .left), withMode: .exit, swipeView: swipeView, swipeColor: swipeColor, completion: { cell, trigger, state, mode in
+
+            try! realm.write {
+                task.completed = !task.completed
+
+                realm.create(Task.self, value: task, update: true)
+
+            }
+
+            showToast(message)
+
+        })
+
+        cell.addSwipeTrigger(forState: .state(0, .right), withMode: .toggle, swipeView: viewWithImageName("cross"), swipeColor: redColor, completion: { cell, trigger, state, mode in
+
+            let yesHandler: ((UIAlertAction) -> Void) = { (action) in
+                //            DELETE TASK
+                try! realm.write {
+                    realm.delete(task)
+                }
+                showToast("Task deleted!")
+            }
+
+            let noHandler: ((UIAlertAction) -> Void) = { (action) in
+                cell.swipeToOrigin { }
+            }
+
+            presentYesNoAlert(title: "Are you sure you want to delete that Task?", message: " \(task.name) \nWill be deleted forever!", view: self, yesHandler: yesHandler, noHandler: noHandler)
+
+        })
 
         return cell
     }
 
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-
-        let data = searchController.isActive ? searchedTasks : taskList
-
-        let task = data[indexPath.row]
-
-        if tableView.isEditing {
-
-            cell.setSelected(searchedTasks.contains(task), animated: false)
-
-            if searchedTasks.contains(task) {
-
-                tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-
-            } else {
-
-                tableView.deselectRow(at: indexPath, animated: false)
-            }
-        }
-    }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-//        let data = searchController.isActive ? searchedTasks : taskList
-
-//        if(tableView.isEditing) {
-//
-//            if !searchedTasks[selectedScope].contains(data[selectedScope][indexPath.row]) {
-//
-//                searchedTasks.append(data[selectedScope][indexPath.row])
-//            }
-//
-//            self.navigationItem.rightBarButtonItem?.isEnabled = searchedTasks.count > 0
-//
-//        } else {
-//
-////            performSegue(withIdentifier: "editTask", sender: indexPath)
-//
-//            tableView.deselectRow(at: indexPath, animated: true)
-//        }
-//
+        self.selectedTask = items[indexPath.row]
         tableView.deselectRow(at: indexPath, animated: true)
+        self.performSegue(withIdentifier: "editTask", sender: nil)
 
     }
-
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-
-//        let data = searchController.isActive ? searchedTasks : taskList
-
-//        searchedTasks = searchedTasks.filter {
-
-//            $0.name != data(objectat)indexPath.row.name
-//        }
-
-        if tableView.isEditing {
-
-//            self.navigationItem.rightBarButtonItem?.isEnabled = searchedTasks.count > 0
-        }
-
-    }
-
-    //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    //
-    //        return 80
-    //    }
-
-
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-
-        let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {
-
-            let data = searchController.isActive ? searchedTasks : taskList
-
-            let task = data[self.selectedScope][$1.row]
-
-            let yesHandler: ((UIAlertAction) -> Void) = { (action) in
-//            DELETE TASK
-                try! realm.write {
-                    realm.delete(task)
-                }
-            }
-
-
-
-            presentYesNoAlert(title: "Are you sure you want to delete that Task?", message: " \(task.name)? \nWill be deleted forever!", view: self, yesHandler: yesHandler, noHandler: nil)
-        })
-
-        let edit = UITableViewRowAction(style: .normal, title: "Edit", handler: {
-
-//            let data = self.searchController.isActive ? self.searchedTasks : self.taskList
-
-//            let task = data[$1.row]
-
-            self.selectedRow = $1.row
-
-            self.performSegue(withIdentifier: "editTask", sender: nil)
-        })
-
-        return [delete, edit]
-    }
-
-    //     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-    //         if editingStyle == .delete {
-
-    //             let alertController = UIAlertController(title: "Warning!", message: "Are you sure you want to delete this Task?", preferredStyle: UIAlertControllerStyle.alert)
-
-    //             let okAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.default)
-    //             {
-    //                 (result: UIAlertAction) -> Void in
-    // //                self.deleteOccurrence(index: indexPath)
-    //             }
-
-
-    //             let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel)
-    //             {
-    //                 (result: UIAlertAction) -> Void in
-    //                 print("You pressed Cancel")
-    //             }
-
-    //             alertController.addAction(cancelAction)
-    //             alertController.addAction(okAction)
-    //             self.present(alertController, animated: true, completion: nil)
-    //             //            objects.remove(at: indexPath.row)
-    //             //            tableView.deleteRows(at: [indexPath], with: .fade)
-    //         }
-    //         //        else if editingStyle == .insert {
-    //         //            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-    //         //        }
-    //     }
-
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
@@ -357,10 +318,7 @@ var data = searchedTasks[selectedScope]
             switch segueIdentifier {
             case "editTask":
 
-                let data = searchController.isActive ? searchedTasks : taskList
-
-                let task = data[selectedScope][selectedRow]
-                self.selectedRow = -100
+                let task = self.selectedTask
 
                 let destination = segue.destination as! DetailsViewController
                 destination.task = task

@@ -17,7 +17,7 @@
 		2F47885A1F1E6FD0009BA6D6 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4788591F1E6FD0009BA6D6 /* DetailsViewController.swift */; };
 		2F47885D1F1E6FEB009BA6D6 /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F47885C1F1E6FEB009BA6D6 /* TaskModel.swift */; };
 		2F47885F1F1E746D009BA6D6 /* TaskCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F47885E1F1E746D009BA6D6 /* TaskCellModel.swift */; };
-		2F4788611F1E79C4009BA6D6 /* PublicVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4788601F1E79C4009BA6D6 /* PublicVars.swift */; };
+		2F4788611F1E79C4009BA6D6 /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4788601F1E79C4009BA6D6 /* Shared.swift */; };
 		84899C180246F3D67C415179 /* Pods_strewTestUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3394CA46703338A4707078D6 /* Pods_strewTestUITests.framework */; };
 		CFEE29493BAB39D0D38AFFC9 /* Pods_strewTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AB271F8F9ADA806C2C20325 /* Pods_strewTest.framework */; };
 		D515F9096984B14522850131 /* Pods_strewTestTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BECFB5DDE928F79624790711 /* Pods_strewTestTests.framework */; };
@@ -57,7 +57,7 @@
 		2F4788591F1E6FD0009BA6D6 /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		2F47885C1F1E6FEB009BA6D6 /* TaskModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
 		2F47885E1F1E746D009BA6D6 /* TaskCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCellModel.swift; sourceTree = "<group>"; };
-		2F4788601F1E79C4009BA6D6 /* PublicVars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicVars.swift; sourceTree = "<group>"; };
+		2F4788601F1E79C4009BA6D6 /* Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
 		3394CA46703338A4707078D6 /* Pods_strewTestUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_strewTestUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		372134FF1ABA4094A8F18FB9 /* Pods-strewTestTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-strewTestTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-strewTestTests/Pods-strewTestTests.release.xcconfig"; sourceTree = "<group>"; };
 		6AB271F8F9ADA806C2C20325 /* Pods_strewTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_strewTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -174,7 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				2F47885C1F1E6FEB009BA6D6 /* TaskModel.swift */,
-				2F4788601F1E79C4009BA6D6 /* PublicVars.swift */,
+				2F4788601F1E79C4009BA6D6 /* Shared.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -486,7 +486,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F4788611F1E79C4009BA6D6 /* PublicVars.swift in Sources */,
+				2F4788611F1E79C4009BA6D6 /* Shared.swift in Sources */,
 				2F21DD321F1E59F40056448D /* ListViewController.swift in Sources */,
 				2F21DD301F1E59F40056448D /* AppDelegate.swift in Sources */,
 				2F47885D1F1E6FEB009BA6D6 /* TaskModel.swift in Sources */,
@@ -647,6 +647,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = QM39MZ3QRV;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = strewTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tavapps.strewTest;
@@ -661,6 +662,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = QM39MZ3QRV;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = strewTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tavapps.strewTest;

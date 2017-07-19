@@ -34,13 +34,8 @@ class DetailsViewController: UIViewController, UITextFieldDelegate {
             self.nameTextField.text = task.name
             self.prioritySelector.selectedSegmentIndex = task.priority
         }
-        // Do any additional setup after loading the view, typically from a nib.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
     @IBAction func saveButton(_ sender: Any) {
 
@@ -58,27 +53,24 @@ class DetailsViewController: UIViewController, UITextFieldDelegate {
 
     func saveTask(name: String, priority: Int) {
 
-
-
         if(isEditingTask) {
-//            DispatchQueue.global().async {
             
             try! realm.write {
                 self.task.name = name
                 self.task.priority = priority
                 realm.create(Task.self,value:self.task,update:true)
-//                realm.add(self.task)
+
             }
-//            }
+
             parentView.message = "Task updated!"
         } else {
-//            DispatchQueue.global().async {
+
             try! realm.write {
                 self.task.name = name
                 self.task.priority = priority
                 
                 realm.create(Task.self,value:self.task)
-//            }
+
             }
             parentView.message = "Task created!"
         }

@@ -7,6 +7,7 @@ target 'strewTest' do
   pod 'RealmSwift'
   pod 'SkyFloatingLabelTextField', '~> 3.0'
   pod 'Toaster'
+  pod 'SwipyCell', '~> 3.2'
   # Pods for strewTest
 
   target 'strewTestTests' do

@@ -30,7 +30,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bkJ-Vp-2vR" id="vAP-LA-zaR">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uWo-AZ-GMu">
@@ -80,7 +80,6 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Task List" id="0RC-Vo-lgp">
-                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="FvF-iY-obp"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="YHg-5W-fSM">
                             <connections>
                                 <segue destination="66o-2C-tT1" kind="show" identifier="newTask" id="SKv-Kb-XAq"/>

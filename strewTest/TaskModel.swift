@@ -21,7 +21,3 @@ class Task: Object {
     }
 }
 
-class TaskList: Object {
-    var list = List<Task>()
-}
-
