@@ -11,7 +11,7 @@ import RealmSwift
 class Task: Object {
     dynamic var id = NSUUID().uuidString
     dynamic var name = ""
-    dynamic var priority = 0 // 1=Very Low / 2=Low / 3=Medium / 4=High / 5=Very High
+    dynamic var priority = 0 //0=Low / 1=Medium / 2=High
     dynamic var created_at = Date()
     dynamic var completed = false
     dynamic var completed_at = Date()
@@ -24,3 +24,4 @@ class Task: Object {
 class TaskList: Object {
     var list = List<Task>()
 }
+

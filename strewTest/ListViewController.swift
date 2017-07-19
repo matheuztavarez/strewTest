@@ -13,25 +13,31 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     @IBOutlet weak var tableView: UITableView!
 
-    var taskList = [Results<Task>]()
-    var searchedTasks = [Results<Task>]()
+    
     var selectedRow = 0
-    var searchController: UISearchController!
+    var searchController : UISearchController!
     var selectedScope = 0
     var notificationToken: NotificationToken?
 
     var message = ""
     var refreshControl: UIRefreshControl?
+    
+    var setupView = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.viewSetup()
+        
         self.hideKeyboardWhenTappedAround()
 
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupRealm()
+    }
 
     override func viewDidAppear(_ animated: Bool) {
-        setupRealm()
+super.viewDidAppear(animated)
         if(self.message != "") {
             showToast(self.message)
             self.message = ""
@@ -53,39 +59,42 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //    }
 
     func viewSetup() {
-
-        searchController = UISearchController(searchResultsController: nil)
-
-        self.definesPresentationContext = true
-
-        searchController.searchResultsUpdater = self
-
-        searchController.dimsBackgroundDuringPresentation = false
-
-        searchController.searchBar.placeholder = "Search Task"
-
-        searchController.searchBar.sizeToFit()
-        searchController.searchBar.showsScopeBar = true
-        searchController.searchBar.scopeButtonTitles = ["To Do", "Done", "All"]
-        tableView.tableFooterView = UIView(frame: .zero)
-
-        self.tableView.tableHeaderView = searchController.searchBar
-
-        let footerView = UIView(frame: CGRect.zero)
-        footerView.backgroundColor = .white
-
-        tableView.tableFooterView = footerView
-        self.tableView.backgroundColor = .white
-
+        
         refreshControl = UIRefreshControl()
-
+        
         if #available(iOS 10.0, *) {
             tableView.refreshControl = refreshControl
         } else {
             tableView.addSubview(refreshControl!)
         }
-
+        
         refreshControl?.addTarget(self, action: #selector(setupRealm), for: .valueChanged)
+        
+        searchController = UISearchController(searchResultsController: nil)
+        
+        self.definesPresentationContext = true
+        
+        searchController.searchResultsUpdater = self
+        
+        searchController.dimsBackgroundDuringPresentation = false
+        
+        searchController.searchBar.sizeToFit()
+        searchController.searchBar.showsScopeBar = true
+        searchController.searchBar.placeholder = "Search Task"
+
+        searchController.isActive = false
+        searchController.searchBar.scopeButtonTitles = ["To Do", "Done", "All"]
+        
+        self.tableView.tableHeaderView = searchController.searchBar
+               
+
+        let footerView = UIView(frame: CGRect.zero)
+        footerView.backgroundColor = .white
+
+        self.tableView.tableFooterView = footerView
+        self.tableView.backgroundColor = .white
+
+        
     }
 
 
@@ -99,8 +108,6 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 break
 //                self.didUpdateList(reload: true)
             case .update(_, let deletions, let insertions, let modifications):
-
-
 
                 self.tableView.beginUpdates()
                 self.tableView.insertRows(at: insertions.map { IndexPath(row: $0, section: 0) }, with: .automatic)
@@ -128,36 +135,34 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
 
 
-        taskList[0] = realm.objects(Task.self).filter("completed == false")
-        taskList[1] = realm.objects(Task.self).filter("completed == true")
-        taskList[2] = realm.objects(Task.self)
-
+        taskList.append(realm.objects(Task.self).filter("completed == false"))
+        taskList.append(realm.objects(Task.self).filter("completed == true"))
+        taskList.append(realm.objects(Task.self))
+        
+searchedTasks.removeAll(keepingCapacity: false)
+        
+        searchedTasks = taskList
+        
         for i in 0...2 {
             self.notificationToken = self.setupNotifications(taskList[i])
         }
-//            self.tableView.reloadData()
-
+        if(setupView){
+self.viewSetup()
+            self.setupView = false
+        }
     }
 
     //MARK: Search Delegate
 
     func updateSearchResults(for searchController: UISearchController) {
 
-        self.searchedTasks.removeAll(keepingCapacity: false)
+        searchedTasks.removeAll(keepingCapacity: false)
 
         if let searchText = searchController.searchBar.text, !searchText.isEmpty {
-//            let array = taskList.filter({
-//
-////                var item = $0
-////                var itemD = (item as! NSDictionary)
-//                let name = String(describing:$0["name"])
-//
-//                return name.range(of: searchText, options: NSString.CompareOptions.caseInsensitive) != nil
-//            })
 
             let predicate = NSPredicate(format: "name contains %@", searchText.lowercased())
             let array = realm.objects(Task.self).filter(predicate)
-            self.searchedTasks[selectedScope] = array
+            searchedTasks[selectedScope] = array
         } else {
             searchedTasks = taskList
         }
@@ -168,12 +173,15 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     func searchBar(_: UISearchBar, selectedScopeButtonIndexDidChange: Int) {
         self.selectedScope = selectedScopeButtonIndexDidChange
+        self.tableView.reloadData()
     }
 
     // MARK: - Table view data source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        if(taskList[selectedScope].count == 0) {
+//        let data = searchController.isActive ? searchedTasks : taskList
+        
+        if(searchedTasks[selectedScope].count == 0) {
 
             let noResultLabel = UILabel(frame: tableView.bounds)
             noResultLabel.textColor = UIColor(white: 60.0 / 255.0, alpha: 1)
@@ -193,8 +201,9 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
             tableView.backgroundView = nil
         }
-
-        return taskList[selectedScope].count
+var data = searchedTasks[selectedScope]
+        var count = data.count
+        return count
 
     }
 
@@ -204,7 +213,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
         let data = searchController.isActive ? searchedTasks : taskList
 
-        let task = data[selectedScope][indexPath.row]
+        let task = searchedTasks[selectedScope][indexPath.row]
 
         cell.bind(task)
 
@@ -234,24 +243,24 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        let data = searchController.isActive ? searchedTasks : taskList
+//        let data = searchController.isActive ? searchedTasks : taskList
 
-        if(tableView.isEditing) {
-
-            if !searchedTasks.contains(data[indexPath.row]) {
-
-                searchedTasks.append(data[indexPath.row])
-            }
-
-            self.navigationItem.rightBarButtonItem?.isEnabled = searchedTasks.count > 0
-
-        } else {
-
-//            performSegue(withIdentifier: "editTask", sender: indexPath)
-
-            tableView.deselectRow(at: indexPath, animated: true)
-        }
-
+//        if(tableView.isEditing) {
+//
+//            if !searchedTasks[selectedScope].contains(data[selectedScope][indexPath.row]) {
+//
+//                searchedTasks.append(data[selectedScope][indexPath.row])
+//            }
+//
+//            self.navigationItem.rightBarButtonItem?.isEnabled = searchedTasks.count > 0
+//
+//        } else {
+//
+////            performSegue(withIdentifier: "editTask", sender: indexPath)
+//
+//            tableView.deselectRow(at: indexPath, animated: true)
+//        }
+//
         tableView.deselectRow(at: indexPath, animated: true)
 
     }
@@ -282,7 +291,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
         let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {
 
-            let data = self.searchController.isActive ? self.searchedTasks : self.taskList
+            let data = searchController.isActive ? searchedTasks : taskList
 
             let task = data[self.selectedScope][$1.row]
 
@@ -368,16 +377,4 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 }
 
-func presentYesNoAlert(title: String, message: String, view: UIViewController, yesHandler: ((UIAlertAction) -> Void)?, noHandler: ((UIAlertAction) -> Void)?) {
-    let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-    let yesAction = UIAlertAction(title: "Yes", style: .destructive, handler: yesHandler)
-
-    let noAction = UIAlertAction(title: "No", style: .cancel, handler: noHandler)
-
-    alertController.addAction(yesAction)
-
-    alertController.addAction(noAction)
-
-    view.present(alertController, animated: true, completion: nil)
-}
